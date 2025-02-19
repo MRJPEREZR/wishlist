@@ -1,27 +1,37 @@
 services:
-  web:
-    image: php:8.2-apache    #check the php version you need for your project
-    container_name: apache_server
+  symfony:
+    image: bitnami/symfony
+    container_name: symfony_app
     ports:
-      - "80:80"    #this line maps your pc port to the container port
-    depends_on:
-      - db    #this line links this container to the db container
-    volumes:
-      - ./www:/var/www/html    #this line maps the content of ./html in your pc to the /var/www/html of the container
-  db:
-    image: mysql:8.1.0    #check the mysql version you need for your project
-    container_name: mysql_db
+      - "80:8000"
     environment:
-      MYSQL_ROOT_PASSWORD: password    #you can change the mysql root password here
-      MYSQL_DATABASE: lamp_db    #you can change the database name here
+      - SYMFONY_PROJECT_SKELETON=symfony/skeleton
+      - DATABASE_HOST=mysql
+      - SYMFONY_DATABASE_PASSWORD=symfony
     volumes:
-      - ./mysql_data:/var/lib/mysql    #this line maps the content of ./mysql_data in your pc to the /var/lib/mysql of the container
+      - ./web_app:/app
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.1
+    container_name: symfony_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: symfony
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: symfony
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     ports:
       - "8080:80"    #this line maps your pc port to the container port
     depends_on:
-      - db    #this line links this container to the db container
+      - mysql    #this line links this container to the db container
     environment:
-      PMA_HOST: db
+      PMA_HOST: mysql
