@@ -17,8 +17,8 @@ services:
     image: mysql:8.1
     container_name: symfony_db
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wishlist_db
       MYSQL_USER: symfony
       MYSQL_PASSWORD: symfony
     ports:
@@ -35,3 +35,6 @@ services:
       - mysql    #this line links this container to the db container
     environment:
       PMA_HOST: mysql
+
+#If you got an error about folder permissions with innodb_redo, 
+# try to fix it by running sudo chmod -R 755 ~/<your_path>/wishlist/mysql_data 
