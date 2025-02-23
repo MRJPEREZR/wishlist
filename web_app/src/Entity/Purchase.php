@@ -16,17 +16,17 @@ class Purchase
     #[ORM\Column]
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user_id = null;
+    private ?int $user = null;
 
     #[ORM\Column]
-    #[ORM\ManyToOne(targetEntity: Wishlist::class)]
+    #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $wishlist_id = null;
+    private ?int $wishList = null;
 
     #[ORM\Column]
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $item_id = null;
+    private ?int $item = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url_proof = null;
@@ -42,45 +42,38 @@ class Purchase
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getUser(): ?int
     {
-        $this->id = $id;
+        return $this->user;
+    }
+
+    public function setUser(int $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getWishList(): ?int
     {
-        return $this->user_id;
+        return $this->wishlist;
     }
 
-    public function setUserId(int $user_id): static
+    public function setWishList(int $wishList): static
     {
-        $this->user_id = $user_id;
+        $this->wishList = $wishList;
 
         return $this;
     }
 
-    public function getWishlistId(): ?int
+    public function getItem(): ?int
     {
-        return $this->wishlist_id;
+        return $this->item;
     }
 
-    public function setWishlistId(int $wishlist_id): static
+    public function setItem(int $item): static
     {
-        $this->wishlist_id = $wishlist_id;
-
-        return $this;
-    }
-
-    public function getItemId(): ?int
-    {
-        return $this->item_id;
-    }
-
-    public function setItemId(int $item_id): static
-    {
-        $this->item_id = $item_id;
+        $this->item = $item;
 
         return $this;
     }

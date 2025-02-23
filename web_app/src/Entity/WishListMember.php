@@ -14,14 +14,14 @@ class WishListMember
     private ?int $id = null;
 
     #[ORM\Column]
-    #[ORM\ManyToOne(targetEntity: Wishlist::class)]
+    #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $wishlist_id = null;
+    private ?int $wishList = null;
 
     #[ORM\Column]
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user_id = null;
+    private ?int $user = null;
 
     #[ORM\Column]
     private ?bool $can_edit = null;
@@ -37,26 +37,26 @@ class WishListMember
         return $this->id;
     }
 
-    public function getWishlistId(): ?int
+    public function getWishList(): ?int
     {
-        return $this->wishlist_id;
+        return $this->wishList;
     }
 
-    public function setWishlistId(int $wishlist_id): static
+    public function setWishList(int $wishList): static
     {
-        $this->wishlist_id = $wishlist_id;
+        $this->wishList = $wishList;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): ?int
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(int $user_id): static
+    public function setUser(int $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -93,13 +93,6 @@ class WishListMember
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function setId(?Wishlist $id): static
-    {
-        $this->id = $id;
 
         return $this;
     }

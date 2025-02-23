@@ -18,6 +18,10 @@ Create an entity
 ```
 docker exec -it symfony_app php bin/console make:entity
 ```
+Update getters and setters in new properties where added manually
+```
+docker exec -it symfony_app php bin/console make:entity --regenerate
+```
 
 Create migration file to apply in the dp
 ```

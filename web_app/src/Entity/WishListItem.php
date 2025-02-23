@@ -14,40 +14,40 @@ class WishListItem
     private ?int $id = null;
 
     #[ORM\Column]
-    #[ORM\ManyToOne(targetEntity: Wishlist::class)]
+    #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $wishlist_id = null;
+    private ?int $wishList = null;
 
     #[ORM\Column]
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $item_id = null;
+    private ?int $item = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getWishlistId(): ?int
+    public function getWishList(): ?int
     {
-        return $this->wishlist_id;
+        return $this->wishList;
     }
 
-    public function setWishlistId(int $wishlist_id): static
+    public function setWishList(int $wishList): static
     {
-        $this->wishlist_id = $wishlist_id;
+        $this->wishList = $wishList;
 
         return $this;
     }
 
-    public function getItemId(): ?int
+    public function getItem(): ?int
     {
         return $this->item_id;
     }
 
-    public function setItemId(int $item_id): static
+    public function setItem(int $item): static
     {
-        $this->item_id = $item_id;
+        $this->item = $item;
 
         return $this;
     }

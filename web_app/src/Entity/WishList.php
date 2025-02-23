@@ -16,7 +16,7 @@ class WishList
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user_id = null;
+    private ?int $user = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -35,21 +35,14 @@ class WishList
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getUser(): ?User
     {
-        $this->id = $id;
-
-        return $this;
+        return $this->user;
     }
 
-    public function getUserId(): ?int
+    public function setUser(?User $user): static
     {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): static
-    {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
