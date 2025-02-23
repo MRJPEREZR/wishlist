@@ -12,7 +12,10 @@ services:
       - app
 
   app:
-    image: php:8.2-fpm
+    image: php_composer
+    build:
+      context: .
+      dockerfile: symfony.dockerfile
     container_name: symfony_app
     working_dir: /var/www
     volumes:

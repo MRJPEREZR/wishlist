@@ -1,5 +1,7 @@
+# Use official PHP-FPM image
 FROM php:8.2-fpm
 
+# Set working directory inside the container
 WORKDIR /var/www
 
 # Install required system dependencies
