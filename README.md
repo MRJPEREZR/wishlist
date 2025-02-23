@@ -12,5 +12,19 @@ composer require --dev symfony/maker-bundle
 php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
+```
 
+Create an entity
+```
+docker exec -it symfony_app php bin/console make:entity
+```
+
+Create migration file to apply in the dp
+```
+docker exec -it symfony_app php bin/console make:migration
+```
+
+Apply the migration file in the db
+```
+docker exec -it symfony_app php bin/console doctrine:migrations:migrate
 ```
