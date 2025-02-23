@@ -14,12 +14,18 @@ class Purchase
     private ?int $id = null;
 
     #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?int $user_id = null;
 
     #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: Wishlist::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?int $wishlist_id = null;
 
     #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: Item::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?int $item_id = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -14,9 +14,13 @@ class WishListMember
     private ?int $id = null;
 
     #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: Wishlist::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?int $wishlist_id = null;
 
     #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?int $user_id = null;
 
     #[ORM\Column]
@@ -89,6 +93,13 @@ class WishListMember
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function setId(?Wishlist $id): static
+    {
+        $this->id = $id;
 
         return $this;
     }
