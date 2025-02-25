@@ -32,6 +32,7 @@ php bin/console doctrine:migrations:migrate prev
 
 To add sample data per dafault to the database (after finished editing DataFixtures/ files)
 Note: Add the `--append` flag if you don't want to erase the records already created.
+Also add `--group` to apply and specific file.
 ```
 php bin/console doctrine:fixtures:load
 ```

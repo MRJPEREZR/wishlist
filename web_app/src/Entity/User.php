@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Enum\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -138,4 +140,20 @@ class User
 
         return $this;
     }
+
+    //Methods neeeded to be implemented here because of the extension of UserInterface, PasswordAuthenticatedUserInterface
+    public function getRoles(): array
+    {
+        return [$this->role->value]; // Assuming UserRole is an enum with string values
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email; // Or another unique identifier like username
+    }
+
+    public function eraseCredentials(): void
+    {
+        // If storing temporary sensitive data, clear it here
+    } 
 }
