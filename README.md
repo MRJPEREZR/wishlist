@@ -24,3 +24,8 @@ Apply the migration file in the db
 ```
 docker exec -it symfony_app php bin/console doctrine:migrations:migrate
 ```
+
+Rollback to the previous migrate version
+```
+php bin/console doctrine:migrations:migrate prev
+```
