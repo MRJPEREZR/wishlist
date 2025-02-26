@@ -15,11 +15,11 @@ class WishListMember
 
     #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $wishList = null;
+    private ?WishList $wishList = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user = null;
+    private ?User $user = null;
 
     #[ORM\Column]
     private ?bool $can_edit = null;
@@ -35,24 +35,24 @@ class WishListMember
         return $this->id;
     }
 
-    public function getWishList(): ?int
+    public function getWishList(): ?WishList
     {
         return $this->wishList;
     }
 
-    public function setWishList(int $wishList): static
+    public function setWishList(WishList $wishList): static
     {
         $this->wishList = $wishList;
 
         return $this;
     }
 
-    public function getUser(): ?int
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(int $user): static
+    public function setUser(User $user): static
     {
         $this->user = $user;
 
