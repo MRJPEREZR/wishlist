@@ -1,0 +1,38 @@
+Commands to set up Symfony with DB connection
+
+```
+php bin/console doctrine:database:create
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+```
+
+Create an entity
+```
+docker exec -it symfony_app php bin/console make:entity
+```
+Update getters and setters in new properties where added manually
+```
+docker exec -it symfony_app php bin/console make:entity --regenerate
+```
+
+Create migration file to apply in the dp
+```
+docker exec -it symfony_app php bin/console make:migration
+```
+
+Apply the migration file in the db
+```
+docker exec -it symfony_app php bin/console doctrine:migrations:migrate
+```
+
+Rollback to the previous migrate version
+```
+php bin/console doctrine:migrations:migrate prev
+```
+
+To add sample data per dafault to the database (after finished editing DataFixtures/ files)
+Note: Add the `--append` flag if you don't want to erase the records already created.
+Also add `--group` to apply and specific file.
+```
+php bin/console doctrine:fixtures:load
+```
