@@ -18,7 +18,7 @@ class WishList
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user = null;
+    private ?User $user = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
