@@ -15,15 +15,15 @@ class Purchase
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $wishList = null;
+    private ?WishList $wishList = null;
 
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $item = null;
+    private ?Item $item = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url_proof = null;
@@ -39,36 +39,36 @@ class Purchase
         return $this->id;
     }
 
-    public function getUser(): ?int
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(int $user): static
+    public function setUser(User $user): static
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getWishList(): ?int
+    public function getWishList(): ?WishList
     {
         return $this->wishlist;
     }
 
-    public function setWishList(int $wishList): static
+    public function setWishList(WishList $wishList): static
     {
         $this->wishList = $wishList;
 
         return $this;
     }
 
-    public function getItem(): ?int
+    public function getItem(): ?Item
     {
         return $this->item;
     }
 
-    public function setItem(int $item): static
+    public function setItem(Item $item): static
     {
         $this->item = $item;
 

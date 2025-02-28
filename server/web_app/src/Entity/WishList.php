@@ -23,6 +23,9 @@ class WishList
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
     #[ORM\ManyToMany(targetEntity: Item::class)]
     #[ORM\JoinTable(name: "wishlist_item")]
     private Collection $items;
@@ -32,6 +35,13 @@ class WishList
 
     #[ORM\Column]
     private ?bool $is_active = null;
+
+    //add getters and setters 
+    #[ORM\Column(length: 255)]
+    private ?string $urlViewMode = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $urlEditMode = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -70,6 +80,18 @@ class WishList
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getExpirationDate(): ?\DateTimeInterface
     {
         return $this->expiration_date;
@@ -92,6 +114,22 @@ class WishList
         $this->is_active = $is_active;
 
         return $this;
+    }
+
+    public function getUrlViewMode () {
+        return $this->urlViewMode;
+    }
+
+    public function setUrlViewMode (string $urlViewMode) {
+        $this->urlViewMode = $urlViewMode;
+    }
+
+    public function getUrlEditMode () {
+        return $this->urlViewMode;
+    }
+
+    public function setUrlEditMode (string $urlEditMode) {
+        $this->urlEditMode = $urlEditMode;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable

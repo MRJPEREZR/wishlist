@@ -27,12 +27,12 @@ docker exec -it symfony_app php bin/console doctrine:migrations:migrate
 
 Rollback to the previous migrate version
 ```
-php bin/console doctrine:migrations:migrate prev
+docker exec -it symfony_app php bin/console doctrine:migrations:migrate prev
 ```
 
 To add sample data per dafault to the database (after finished editing DataFixtures/ files)
 Note: Add the `--append` flag if you don't want to erase the records already created.
 Also add `--group` to apply and specific file.
 ```
-php bin/console doctrine:fixtures:load
+docker exec -it symfony_app php bin/console doctrine:fixtures:load
 ```

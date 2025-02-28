@@ -25,6 +25,9 @@ class Item
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $purchase_url = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?bool $is_bought = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -77,6 +80,18 @@ class Item
     public function setPurchaseUrl(?string $purchase_url): static
     {
         $this->purchase_url = $purchase_url;
+
+        return $this;
+    }
+
+    public function isBought(): ?bool
+    {
+        return $this->is_bought;
+    }
+
+    public function setIsBought(?bool $is_bought): static
+    {
+        $this->is_bought = $is_bought;
 
         return $this;
     }
