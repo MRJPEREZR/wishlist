@@ -1,0 +1,69 @@
+<div class="mermaid">
+   erDiagram
+        ITEM {
+            INT id PK
+            VARCHAR title
+            VARCHAR description
+            DOUBLE price
+            VARCHAR purchase_url
+            BOOLEAN is_bought
+            DATETIME created_at
+        }
+
+        PURCHASE {
+            INT id PK
+            INT user_id FK
+            INT wish_list_id FK
+            INT item_id FK
+            VARCHAR url_proof
+            VARCHAR message
+            DATETIME created_at
+        }
+
+        USER {
+            INT id PK
+            VARCHAR user_name
+            VARCHAR name
+            VARCHAR surname
+            VARCHAR email 
+            VARCHAR password
+            BOOLEAN is_blocked
+            VARCHAR role
+            DATETIME created_at
+        }
+
+        WISH_LIST {
+            INT id PK
+            INT user_id FK
+            VARCHAR name
+            VARCHAR description
+            DATETIME expiration_date
+            BOOLEAN is_active
+            VARCHAR url_view_mode
+            VARCHAR url_edit_mode
+            DATETIME created_at
+        }
+
+        WISHLIST_ITEM {
+            INT wish_list_id FK
+            INT item_id FK
+        }
+
+        WISH_LIST_MEMBER {
+            INT id PK
+            INT wish_list_id FK
+            INT user_id FK
+            BOOLEAN can_edit
+            BOOLEAN is_accepted
+            DATETIME created_at
+        }
+
+        USER ||--o{ PURCHASE : makes
+        USER ||--o{ WISH_LIST : owns
+        USER ||--o{ WISH_LIST_MEMBER : is
+        PURCHASE ||--|{ ITEM : includes
+        PURCHASE ||--|{ WISH_LIST : for
+        WISH_LIST ||--o{ WISH_LIST_MEMBER : has
+        WISH_LIST ||--o{ WISHLIST_ITEM : contains
+        WISHLIST_ITEM ||--|| ITEM : links_to
+</div>
