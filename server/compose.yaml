@@ -26,6 +26,7 @@ services:
       - APP_ENV=dev
     depends_on:
       - db
+    entrypoint: ["/var/www/entrypoint.sh"]
 
   db:
     image: mysql:9.2.0

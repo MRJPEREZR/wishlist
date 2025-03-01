@@ -2,13 +2,12 @@
 set -e
 
 echo "Running composer install..."
-composer install --no-scripts --no-autoloader --no-interaction --optimize-autoloader
+composer install --no-interaction --optimize-autoloader
 
-# Wait for the database to be ready before running migrations
-echo "Waiting for database connection..."
-until nc -z -v -w30 db 3306; do
-  echo "Waiting for MySQL..."
-  sleep 5
+echo "Waiting for vendor folder to be created..."
+while [ ! -d "/var/www/vendor" ]; do
+  echo "Waiting for vendor directory..."
+  sleep 2
 done
 
 echo "Running migrations..."
