@@ -20,10 +20,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 # Copy existing application files to container
 COPY ./web_app /var/www
 
-# Install Symfony dependencies
-RUN composer install --no-scripts --no-autoloader && composer dump-autoload
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www
-
-CMD ["php-fpm"]
+# Set entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
