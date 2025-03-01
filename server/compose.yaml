@@ -18,6 +18,8 @@ services:
       dockerfile: symfony.dockerfile
     container_name: symfony_app
     working_dir: /var/www
+    ports:
+      - "9000:9000"
     volumes:
       - ./web_app:/var/www
     environment:
