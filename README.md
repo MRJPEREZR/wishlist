@@ -15,3 +15,8 @@ MIRANDA RODRIGUEZ Anamaria
 PEREZ RAMIREZ Julian
 
 # How to execute
+
+```
+cd server/
+docker compose up
+```
