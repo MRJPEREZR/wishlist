@@ -10,13 +10,13 @@ interface UserControllerInterface
 
     public function getAllUsers(): Response;
 
-    public function getUserById(int $user_id): Response;
+    public function getUserById(int $userId): Response;
 
-    public function updateUser(int $user_id, Request $req): Response;
+    public function updateUser(int $userId, Request $req): Response;
 
-    public function deleteUser(int $user_id): Response;
+    public function deleteUser(int $userId): Response;
 
     public function authenticateUser(string $username, string $password): Response;
 
-    public function changePassword(int $user_id, string $old_password, string $new_password): Response;
+    public function changePassword(int $userId, string $oldPassword, string $newPassword): Response;
 }

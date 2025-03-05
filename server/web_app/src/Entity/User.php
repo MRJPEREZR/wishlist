@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -17,18 +18,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Username cannot be empty.")]
+    #[Assert\Length(min: 3, max: 50, minMessage: "Username must be at least {{ limit }} characters long.")]
     private ?string $userName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Name cannot be empty.")]
+    #[Assert\Length(min: 2, max: 100, minMessage: "Name must be at least {{ limit }} characters long.")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Surname cannot be empty.")]
+    #[Assert\Length(min: 2, max: 100, minMessage: "Surname must be at least {{ limit }} characters long.")]
     private ?string $surname = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "Email cannot be empty.")]
+    #[Assert\Email(message: "Invalid email format.")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Password cannot be empty.")]
+    #[Assert\Length(min: 8, minMessage: "Password must be at least {{ limit }} characters long.")]
     private ?string $password = null;
 
     #[ORM\Column(nullable: true)]
