@@ -17,22 +17,18 @@ class Purchase
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: WishList::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?WishList $wishList = null;
-
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $url_proof = null;
+    private ?string $urlProof = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $message = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
@@ -47,19 +43,6 @@ class Purchase
     public function setUser(User $user): static
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getWishList(): ?WishList
-    {
-        return $this->wishlist;
-    }
-
-    public function setWishList(WishList $wishList): static
-    {
-        $this->wishList = $wishList;
-
         return $this;
     }
 
@@ -71,7 +54,6 @@ class Purchase
     public function setItem(Item $item): static
     {
         $this->item = $item;
-
         return $this;
     }
 
@@ -83,7 +65,6 @@ class Purchase
     public function setUrlProof(?string $url_proof): static
     {
         $this->url_proof = $url_proof;
-
         return $this;
     }
 
@@ -95,19 +76,17 @@ class Purchase
     public function setMessage(?string $message): static
     {
         $this->message = $message;
-
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

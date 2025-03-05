@@ -26,15 +26,11 @@ class WishList
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: Item::class)]
-    #[ORM\JoinTable(name: "wishlist_item")]
-    private Collection $items;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $expiration_date = null;
+    private ?\DateTimeInterface $expirationDate = null;
 
     #[ORM\Column]
-    private ?bool $is_active = null;
+    private ?bool $isActive = null;
 
     //add getters and setters 
     #[ORM\Column(length: 255)]
@@ -44,7 +40,7 @@ class WishList
     private ?string $urlEditMode = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
@@ -64,7 +60,6 @@ class WishList
     public function setUser(User $user): static
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -76,7 +71,6 @@ class WishList
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -88,31 +82,28 @@ class WishList
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
     public function getExpirationDate(): ?\DateTimeInterface
     {
-        return $this->expiration_date;
+        return $this->expirationDate;
     }
 
-    public function setExpirationDate(?\DateTimeInterface $expiration_date): static
+    public function setExpirationDate(?\DateTimeInterface $expirationDate): static
     {
-        $this->expiration_date = $expiration_date;
-
+        $this->expirationDate = $expirationDate;
         return $this;
     }
 
     public function isActive(): ?bool
     {
-        return $this->is_active;
+        return $this->isActive;
     }
 
-    public function setIsActive(bool $is_active): static
+    public function setIsActive(bool $isActive): static
     {
-        $this->is_active = $is_active;
-
+        $this->isActive = $isActive;
         return $this;
     }
 
@@ -122,6 +113,7 @@ class WishList
 
     public function setUrlViewMode (string $urlViewMode) {
         $this->urlViewMode = $urlViewMode;
+        return $this;
     }
 
     public function getUrlEditMode () {
@@ -130,41 +122,17 @@ class WishList
 
     public function setUrlEditMode (string $urlEditMode) {
         $this->urlEditMode = $urlEditMode;
+        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Item>
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Item $item): static
-    {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): static
-    {
-        $this->items->removeElement($item);
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

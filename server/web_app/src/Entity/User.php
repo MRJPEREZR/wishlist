@@ -17,7 +17,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $user_name = null;
+    private ?string $userName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
@@ -32,13 +32,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $is_blocked = null;
+    private ?bool $isBlocked = null;
 
     #[ORM\Column(enumType: UserRole::class)]
     private ?UserRole $role = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
@@ -47,13 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserName(): ?string
     {
-        return $this->user_name;
+        return $this->userName;
     }
 
-    public function setUserName(?string $user_name): static
+    public function setUserName(?string $userName): static
     {
-        $this->user_name = $user_name;
-
+        $this->userName = $userName;
         return $this;
     }
 
@@ -65,7 +64,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(?string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -77,7 +75,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSurname(?string $surname): static
     {
         $this->surname = $surname;
-
         return $this;
     }
 
@@ -89,7 +86,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -101,19 +97,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
     public function isBlocked(): ?bool
     {
-        return $this->is_blocked;
+        return $this->isBlocked;
     }
 
-    public function setIsBlocked(?bool $is_blocked): static
+    public function setIsBlocked(?bool $isBlocked): static
     {
-        $this->is_blocked = $is_blocked;
-
+        $this->isBlocked = $isBlocked;
         return $this;
     }
 
@@ -125,19 +119,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRole(UserRole $role): static
     {
         $this->role = $role;
-
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 

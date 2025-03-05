@@ -22,13 +22,13 @@ class WishListMember
     private ?User $user = null;
 
     #[ORM\Column]
-    private ?bool $can_edit = null;
+    private ?bool $canEdit = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $is_accepted = null;
+    private ?bool $isAccepted = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
@@ -43,7 +43,6 @@ class WishListMember
     public function setWishList(WishList $wishList): static
     {
         $this->wishList = $wishList;
-
         return $this;
     }
 
@@ -55,19 +54,17 @@ class WishListMember
     public function setUser(User $user): static
     {
         $this->user = $user;
-
         return $this;
     }
 
     public function isCanEdit(): ?bool
     {
-        return $this->can_edit;
+        return $this->canEdit;
     }
 
-    public function setCanEdit(bool $can_edit): static
+    public function setCanEdit(bool $canEdit): static
     {
-        $this->can_edit = $can_edit;
-
+        $this->canEdit = $canEdit;
         return $this;
     }
 
@@ -76,22 +73,20 @@ class WishListMember
         return $this->is_accepted;
     }
 
-    public function setIsAccepted(?bool $is_accepted): static
+    public function setIsAccepted(?bool $isAccepted): static
     {
-        $this->is_accepted = $is_accepted;
-
+        $this->isAccepted = $isAccepted;
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

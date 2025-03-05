@@ -13,6 +13,10 @@ class Item
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(targetEntity: WishList::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WishList $wishList = null;
+
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -23,17 +27,28 @@ class Item
     private ?float $price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $purchase_url = null;
+    private ?string $purchaseUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?bool $is_bought = null;
+    private ?bool $isBought = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getWishList(): ?WishList
+    {
+        return $this->wishList;
+    }
+
+    public function setWishList(WishList $wishList): static
+    {
+        $this->wishList = $wishList;
+        return $this;
     }
 
     public function getTitle(): ?string
@@ -44,7 +59,6 @@ class Item
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -56,7 +70,6 @@ class Item
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -68,43 +81,39 @@ class Item
     public function setPrice(float $price): static
     {
         $this->price = $price;
-
         return $this;
     }
 
     public function getPurchaseUrl(): ?string
     {
-        return $this->purchase_url;
+        return $this->purchaseUrl;
     }
 
-    public function setPurchaseUrl(?string $purchase_url): static
+    public function setPurchaseUrl(?string $purchaseUrl): static
     {
-        $this->purchase_url = $purchase_url;
-
+        $this->purchaseUrl = $purchaseUrl;
         return $this;
     }
 
     public function isBought(): ?bool
     {
-        return $this->is_bought;
+        return $this->isBought;
     }
 
-    public function setIsBought(?bool $is_bought): static
+    public function setIsBought(?bool $isBought): static
     {
-        $this->is_bought = $is_bought;
-
+        $this->isBought = $isBought;
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

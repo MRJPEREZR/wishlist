@@ -65,10 +65,10 @@
         class User {
             -username: string
             -name: string
-            -username: string
+            -surname: string
             -email: string
-            -password_hash: string
-            -is_blocked: bool
+            -passwordHash: string
+            -isBlocked: bool
             -role:UserRole
             -created_at: datetime
         }
@@ -77,37 +77,36 @@
             -user: User
             -name: string 
             -description: string 
-            -items: Collection
             -expiration_date: datetime
-            -is_active: boolean 
-            -url_view_mode: string
-            -url_edit_mode: string
-            -created_at: datetime 
+            -isActive: boolean 
+            -urlView_mode: string
+            -urlEdit_mode: string
+            -createdAt: datetime 
         }
 
         class WishListMember {
-            -wishlist: WishList 
+            -wishList: WishList 
             -user: User
-            -can_edit: boolean
-            -is_accepted: boolean
+            -canEdit: boolean
+            -isAccepted: boolean
         }
 
         class Item {
             -title: string
+            -wishList: WishList
             -description: string
             -price: float
-            -purchase_url: string
-            -is_bought: boolean
-            -created_at: datetime
+            -purchaseUrl: string
+            -isBought: boolean
+            -createdAt: datetime
         }
 
         class Purchase {
             -user: User 
-            -wishList: WishList
-            -item_id: int 
-            -url_proof: string 
+            -itemd: int 
+            -urlProof: string 
             -message: string
-            -created_at: datetime
+            -createdAt: datetime
         }
 
         %% ===== CONTROLLER LAYER =====
@@ -200,8 +199,8 @@
         User "1" --> "*" WishList : creates
         User --> UserRole: uses
         %% It contains multiple Item objects, but an Item can exist independently of a WishList
-        WishList "1" o-- "*" Item : has
-        %% Either a user or a wishLIst are removed, then the record the wishListMember Object cannot exist
+        WishList "1" *-- "*" Item : belongs
+        %% Either a user or a wishLIst are removed, then the record the wishListMember Object can exist
         WishList "1" *-- "*" WishListMember : has
         User "*" *-- "*" WishListMember : can_access
         %% It does not make sense for a Purchase to exist without an associated Item.
@@ -226,5 +225,4 @@
         %% WishListView --> WishListController: uses
         %% ItemView --> ItemController: uses
         %% PurchaseView --> PurchaseController: uses
-
 </div>
