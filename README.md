@@ -60,4 +60,3 @@ Use-case 3: Administration
     - (b) the sorted list of the top-3 wishlists by total value of purchased gifts.
 Functionalities covered: READ data
 - A page allowing to view the list of users, as well as lock/unlock/remove their accounts.
-Functionalities covered: READ, UPDATE, DELETE data
