@@ -21,7 +21,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 COPY ./web_app /var/www
 
 # Copy entrypoint script
-COPY ../web_app/entrypoint.sh /entrypoint.sh
+COPY web_app/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Set entrypoint script
