@@ -46,6 +46,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isBlocked = null;
 
     #[ORM\Column(enumType: UserRole::class)]
+    #[Assert\Choice(
+        callback: [UserRole::class, 'cases'],
+        message: "Invalid role value. Allowed values: {{ choices }}."
+    )]
     private ?UserRole $role = null;
 
     #[ORM\Column]

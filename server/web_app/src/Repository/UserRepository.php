@@ -6,6 +6,8 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use App\Enum\UserRole;
+
 /**
  * @extends ServiceEntityRepository<User>
  */
@@ -28,6 +30,12 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('isBlocked', false)
             ->getQuery()
             ->getResult();
+    }
+
+    // Custom query method to find a user by id
+    public function findOneById(int $id): ?User
+    {
+        return $this->findOneBy(['id' => $id]);
     }
 
     // Custom query method to find a user by email
