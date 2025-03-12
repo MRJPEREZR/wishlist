@@ -24,7 +24,7 @@ class WishListMember
     #[Assert\NotNull(message: "User must be provided.")]
     private ?User $user = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     #[Assert\NotNull(message: "Edit permission (canEdit) must be set.")]
     #[Assert\Type(type: 'bool', message: "canEdit must be a boolean value.")]
     private ?bool $canEdit = false;

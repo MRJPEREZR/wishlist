@@ -42,18 +42,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 8, minMessage: "Password must be at least {{ limit }} characters long.")]
     private ?string $password = null;
 
-    #[ORM\Column]
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     #[Assert\NotNull(message: "Blocked status cannot be null.")]
     private ?bool $isBlocked = false;
 
-    #[ORM\Column(enumType: UserRole::class, options: ['default' => 'user'])]
+    #[ORM\Column(enumType: UserRole::class)]
     #[Assert\Choice(
-        callback: [UserRole::class, 'getValues'],
+        callback: [UserRole::class, 'cases'],
         message: "Invalid role value. Allowed values: {{ choices }}."
     )]
     private UserRole $role = UserRole::USER;
-
 
     #[ORM\Column]
     #[Assert\NotNull(message: "CreatedAt must be set.")]

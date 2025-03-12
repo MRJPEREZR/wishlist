@@ -85,7 +85,7 @@ final class UserController extends AbstractController implements UserControllerI
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         } catch (UniqueConstraintViolationException $e) {
-            return new JsonResponse(['error' => 'This email is already registered.'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => 'This username or email is already registered.'], Response::HTTP_BAD_REQUEST);
         }
 
         return $this->json([
