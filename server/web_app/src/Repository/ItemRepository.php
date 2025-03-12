@@ -16,28 +16,23 @@ class ItemRepository extends ServiceEntityRepository
         parent::__construct($registry, Item::class);
     }
 
-    //    /**
-    //     * @return Item[] Returns an array of Item objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findAllItems (): array {
+        return $this->findAll();
+    }
 
-    //    public function findOneBySomeField($value): ?Item
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    // Custom query method to find active users
+    public function findByStatus($isBought): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.isBought = :isBought')
+            ->setParameter('isBought', $isBought)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Custom query method to find a user by id
+    public function findOneById(int $id): ?Item
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
 }

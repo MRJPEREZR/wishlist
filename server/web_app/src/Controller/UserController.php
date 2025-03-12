@@ -102,7 +102,7 @@ final class UserController extends AbstractController implements UserControllerI
 
         return $this->json([
             'users' => $userArray,
-            'path' => 'src/Controller/ItemController.php',
+            'path' => 'src/Controller/UserController.php',
         ]);
     }
 
@@ -123,11 +123,11 @@ final class UserController extends AbstractController implements UserControllerI
         ];
         return $this->json([
             'user' => $userDTO,
-            'path' => 'src/Controller/ItemController.php',
+            'path' => 'src/Controller/UserController.php',
         ]);
     }
 
-    #[Route('/{userId}', methods: ['PUT'])]
+    #[Route('/{userId}', methods: ['PATCH'])]
     public function updateUser(int $userId, Request $req): JsonResponse
     {   
         $user = $this->userRepository->findOneById($userId);
@@ -196,7 +196,7 @@ final class UserController extends AbstractController implements UserControllerI
                 'isBlocked' => $user->isBlocked(),
                 'role' => $user->getRole()->value,
             ],
-            'path' => 'src/Controller/ItemController.php'
+            'path' => 'src/Controller/UserController.php'
         ], Response::HTTP_OK);
     }
 
@@ -214,7 +214,7 @@ final class UserController extends AbstractController implements UserControllerI
 
         return $this->json([
             'message' => 'User deleted successfully',
-            'path' => 'src/Controller/ItemController.php',
+            'path' => 'src/Controller/UserController.php',
         ]);
     }
 
@@ -223,7 +223,7 @@ final class UserController extends AbstractController implements UserControllerI
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ItemController.php',
+            'path' => 'src/Controller/UserController.php',
         ]);
     }
 
@@ -232,7 +232,7 @@ final class UserController extends AbstractController implements UserControllerI
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ItemController.php',
+            'path' => 'src/Controller/UserController.php',
         ]);
     }
 }
