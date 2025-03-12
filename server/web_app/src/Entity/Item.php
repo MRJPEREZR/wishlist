@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -15,24 +16,29 @@ class Item
 
     #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "WishList must be selected.")]
     private ?WishList $wishList = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Title cannot be empty.")]
+    #[Assert\Length(max: 255, maxMessage: "Title cannot be longer than 255 characters.")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: "Description cannot be longer than 255 characters.")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Price cannot be null.")]
+    #[Assert\Positive(message: "Price must be a positive number.")]
     private ?float $price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $purchaseUrl = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?bool $isBought = null;
-
     #[ORM\Column]
+    #[Assert\NotNull(message: "CreatedAt must be set.")]
+    #[Assert\Type(type: \DateTimeImmutable::class, message: "CreatedAt must be a valid DateTimeImmutable instance.")]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int

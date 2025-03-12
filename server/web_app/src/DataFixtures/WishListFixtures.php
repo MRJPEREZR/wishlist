@@ -26,8 +26,8 @@ class WishListFixtures extends Fixture implements DependentFixtureInterface
                 'user' => $users[0],  // Assuming at least one user exists
                 'expiration_date' => new \DateTime('+30 days'),
                 'is_active' => true,
-                'url_view_mode' => 'http:://url_view_mode.com',
-                'url_edit_mode' => 'http:://url_edit_mode.com',
+                'url_view_mode' => 'http://url_view_mode.com',
+                'url_edit_mode' => 'http://url_edit_mode.com',
             ],
             [
                 'name' => 'Tech Gadgets Wishlist',
@@ -35,8 +35,8 @@ class WishListFixtures extends Fixture implements DependentFixtureInterface
                 'user' => $users[1],  // Use second user if available, else first user
                 'expiration_date' => new \DateTime('+60 days'),
                 'is_active' => true,
-                'url_view_mode' => 'http:://url_view_mode.com',
-                'url_edit_mode' => 'http:://url_edit_mode.com',
+                'url_view_mode' => 'http://url_view_mode.com',
+                'url_edit_mode' => 'http://url_edit_mode.com',
             ],
             [
                 'name' => 'Home Essentials Wishlist',
@@ -44,8 +44,8 @@ class WishListFixtures extends Fixture implements DependentFixtureInterface
                 'user' => $users[2],  // Use third user if available, else first user
                 'expiration_date' => new \DateTime('+90 days'),
                 'is_active' => false,
-                'url_view_mode' => 'http:://url_view_mode.com',
-                'url_edit_mode' => 'http:://url_edit_mode.com',
+                'url_view_mode' => 'http://url_view_mode.com',
+                'url_edit_mode' => 'http://url_edit_mode.com',
             ],
         ];
 

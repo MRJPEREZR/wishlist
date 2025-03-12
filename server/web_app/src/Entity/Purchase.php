@@ -4,30 +4,33 @@ namespace App\Entity;
 
 use App\Repository\PurchaseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
 class Purchase
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\id]
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: "URL proof cannot exceed 255 characters.")]
+    #[Assert\Url(message: "URL proof must be a valid URL.")]
     private ?string $urlProof = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: "Message cannot exceed 255 characters.")]
     private ?string $message = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "CreatedAt must be set.")]
+    #[Assert\Type(type: \DateTimeImmutable::class, message: "CreatedAt must be a valid DateTimeImmutable instance.")]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int

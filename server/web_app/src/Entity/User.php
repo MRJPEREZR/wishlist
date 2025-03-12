@@ -17,17 +17,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank(message: "Username cannot be empty.")]
     #[Assert\Length(min: 3, max: 50, minMessage: "Username must be at least {{ limit }} characters long.")]
     private ?string $userName = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Name cannot be empty.")]
     #[Assert\Length(min: 2, max: 100, minMessage: "Name must be at least {{ limit }} characters long.")]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Surname cannot be empty.")]
     #[Assert\Length(min: 2, max: 100, minMessage: "Surname must be at least {{ limit }} characters long.")]
     private ?string $surname = null;
@@ -42,17 +42,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 8, minMessage: "Password must be at least {{ limit }} characters long.")]
     private ?string $password = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isBlocked = null;
+    #[ORM\Column]
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    #[Assert\NotNull(message: "Blocked status cannot be null.")]
+    private ?bool $isBlocked = false;
 
-    #[ORM\Column(enumType: UserRole::class)]
+    #[ORM\Column(enumType: UserRole::class, options: ['default' => 'user'])]
     #[Assert\Choice(
-        callback: [UserRole::class, 'cases'],
+        callback: [UserRole::class, 'getValues'],
         message: "Invalid role value. Allowed values: {{ choices }}."
     )]
-    private ?UserRole $role = null;
+    private UserRole $role = UserRole::USER;
+
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "CreatedAt must be set.")]
+    #[Assert\Type(type: \DateTimeImmutable::class, message: "CreatedAt must be a valid DateTimeImmutable instance.")]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int

@@ -20,16 +20,6 @@ class ItemRepository extends ServiceEntityRepository
         return $this->findAll();
     }
 
-    // Custom query method to find active users
-    public function findByStatus($isBought): array
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.isBought = :isBought')
-            ->setParameter('isBought', $isBought)
-            ->getQuery()
-            ->getResult();
-    }
-
     // Custom query method to find a user by id
     public function findOneById(int $id): ?Item
     {

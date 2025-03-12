@@ -75,7 +75,6 @@ final class ItemController extends AbstractController
             'description' =>$item->getDescription(),
             'price' =>$item->getPrice(),
             'purchaseUrl' =>$item->getPurchaseUrl(),
-            'isBought' =>$item->isBought(),
             'createdAt' => $item->getCreatedAt()    
         ];
 

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WishListRepository::class)]
 class WishList
@@ -18,28 +19,43 @@ class WishList
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "User must be provided.")]
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Name cannot be empty.")]
+    #[Assert\Length(max: 255, maxMessage: "Name cannot be longer than 255 characters.")]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: "Description cannot be longer than 255 characters.")]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\Type(type: \DateTimeInterface::class, message: "Expiration date must be a valid date.")]
+    #[Assert\GreaterThan("today", message: "Expiration date must be in the future.")]
     private ?\DateTimeInterface $expirationDate = null;
 
-    #[ORM\Column]
-    private ?bool $isActive = null;
+    #[ORM\Column(options: ['default' => true])]
+    #[Assert\NotNull(message: "isActive status must be set.")]
+    #[Assert\Type(type: 'bool', message: "isActive must be a boolean value.")]
+    private ?bool $isActive = true;
 
-    //add getters and setters 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "View mode URL cannot be empty.")]
+    #[Assert\Length(max: 255, maxMessage: "View mode URL cannot be longer than 255 characters.")]
+    #[Assert\Url(message: "View mode URL must be a valid URL.")]
     private ?string $urlViewMode = null;
 
+    #[Assert\NotBlank(message: "Edit mode URL cannot be empty.")]
+    #[Assert\Length(max: 255, maxMessage: "Edit mode URL cannot be longer than 255 characters.")]
+    #[Assert\Url(message: "Edit mode URL must be a valid URL.")]
     #[ORM\Column(length: 255)]
     private ?string $urlEditMode = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "CreatedAt must be set.")]
+    #[Assert\Type(type: \DateTimeImmutable::class, message: "CreatedAt must be a valid DateTimeImmutable instance.")]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\WishListMemberRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WishListMemberRepository::class)]
 class WishListMember
@@ -15,19 +16,26 @@ class WishListMember
 
     #[ORM\ManyToOne(targetEntity: WishList::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "WishList must be provided.")]
     private ?WishList $wishList = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "User must be provided.")]
     private ?User $user = null;
 
     #[ORM\Column]
-    private ?bool $canEdit = null;
+    #[Assert\NotNull(message: "Edit permission (canEdit) must be set.")]
+    #[Assert\Type(type: 'bool', message: "canEdit must be a boolean value.")]
+    private ?bool $canEdit = false;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isAccepted = null;
+    #[ORM\Column(nullable: true, options: ['default' => false])]
+    #[Assert\Type(type: 'bool', message: "isAccepted must be a boolean value.")]
+    private ?bool $isAccepted = false;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "CreatedAt must be set.")]
+    #[Assert\Type(type: \DateTimeImmutable::class, message: "CreatedAt must be a valid DateTimeImmutable instance.")]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
