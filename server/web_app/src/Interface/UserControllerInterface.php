@@ -8,7 +8,7 @@ interface UserControllerInterface
 {
     public function createUser(Request $req): Response;
 
-    public function getAllUsers(): Response;
+    public function getAllUsers(Request $req): Response;
 
     public function getUserById(int $userId): Response;
 

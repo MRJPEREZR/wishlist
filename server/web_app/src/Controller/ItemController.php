@@ -85,7 +85,8 @@ final class ItemController extends AbstractController
             'max' => $max,
             'sortBy' => $sortBy,
             'sort' => $sort,
-            'onlyBought' => $onlyBought
+            'onlyBought' => $onlyBought,
+            'path' => 'src/Controller/ItemController.php',
         ]);
 
     }

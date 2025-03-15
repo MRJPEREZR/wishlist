@@ -95,13 +95,63 @@ final class UserController extends AbstractController implements UserControllerI
     }
 
     #[Route('', methods: ['GET'])]
-    public function getAllUsers(): JsonResponse
+    public function getAllUsers(Request $req): JsonResponse
     {
-        $users = $this->userRepository->findAllUsers();
-        $userArray = array_map(fn($user) => ['id' => $user->getId(), 'username' => $user->getUserName(), 'mail' => $user->getEmail(), 'createdAt' => $user->getCreatedAt()], $users);
+        // Validate and sanitize query parameters
+        $roleParam = $req->query->get('userRole', null);
+        $userRole = null;
+        
+        // Convert string to enum if valid
+        if ($roleParam !== null && in_array($roleParam, UserRole::getValues(), true)) {
+            $userRole = UserRole::from($roleParam);
+        }
+
+        $isBlocked = filter_var($req->query->get('isBlocked', null), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        
+        // Validate "sortBy" to allow only 'createdAt' or 'username'
+        $allowedSortBy = ['createdAt', 'username'];
+        $sortBy = $req->query->get('sortBy', 'createdAt');
+        if (!in_array($sortBy, $allowedSortBy, true)) {
+            $sortBy = 'createdAt';
+        }
+
+        // Validate "sort" to allow only 'asc' or 'desc'
+        $allowedSort = ['asc', 'desc'];
+        $sort = strtolower($req->query->get('sort', 'asc'));
+        if (!in_array($sort, $allowedSort, true)) {
+            $sort = 'asc';
+        }
+
+        // Validate "max" as a positive integer (default: 10)
+        $max = filter_var($req->query->get('max', 10), FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]) ?: 10;
+
+        // Validate "page" as a positive integer (default: 1)
+        $page = filter_var($req->query->get('page', 1), FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]) ?: 1;
+
+        // Fetch users from repository with filters
+        $users = $this->userRepository->findAllUsersFiltered($userRole, $isBlocked, $sortBy, $sort, $max, $page);
+
+        if (!$users) {
+            return new JsonResponse(['error' => 'No users found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $userArray = array_map(fn($user) => [
+            'id' => $user->getId(),
+            'username' => $user->getUserName(),
+            'mail' => $user->getEmail(),
+            'role' => $user->getRoles(),
+            'isBlocked' => $user->isBlocked(),
+            'createdAt' => $user->getCreatedAt()
+        ], $users);
 
         return $this->json([
             'users' => $userArray,
+            'page' => $page,
+            'max' => $max,
+            'sortBy' => $sortBy,
+            'sort' => $sort,
+            'userRole' => $userRole,
+            'isBlocked' => $isBlocked,
             'path' => 'src/Controller/UserController.php',
         ]);
     }

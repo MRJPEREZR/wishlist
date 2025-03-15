@@ -54,29 +54,27 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllUsersFiltered(?UserRole $userRole, ?bool $isBlocked, string $sortBy, string $sort, int $max, int $page)
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
 
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        // Filter by userRole if provided
+        if ($userRole) {
+            $queryBuilder->andWhere('u.role LIKE :role')
+                         ->setParameter('role', $userRole->value);
+        }
 
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        // Filter by isBlocked if provided
+        if (!is_null($isBlocked)) {
+            $queryBuilder->andWhere('u.isBlocked = :isBlocked')
+                        ->setParameter('isBlocked', $isBlocked);
+        }
+
+        // Apply sorting
+        $queryBuilder->orderBy("u.$sortBy", $sort)
+                    ->setMaxResults($max)
+                    ->setFirstResult(($page - 1) * $max);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
