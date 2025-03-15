@@ -27,9 +27,15 @@ class ItemRepository extends ServiceEntityRepository
     }
 
     // Custom method to manage pagination and filters.
-    public function findAllItemsFiltered(bool $onlyBought, string $sortBy, string $sort, int $max, int $page)
+    public function findAllItemsFiltered(?int $wishList, bool $onlyBought, string $sortBy, string $sort, int $max, int $page)
     {
         $queryBuilder = $this->createQueryBuilder('i');
+
+        // Filter by wishListId if provided
+        if ($wishList !== null) {
+            $queryBuilder->andWhere('i.wishList = :wishListId')
+                        ->setParameter('wishListId', $wishList);
+        }
 
         if ($onlyBought) {
             $queryBuilder->innerJoin('App\Entity\Purchase', 'p', 'WITH', 'p.item = i.id');
@@ -51,5 +57,7 @@ class ItemRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+
 
 }

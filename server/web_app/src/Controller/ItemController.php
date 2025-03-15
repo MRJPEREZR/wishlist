@@ -35,6 +35,9 @@ final class ItemController extends AbstractController
     #[Route('', methods: ['GET'])]
     public function getAllItems(Request $req): JsonResponse
     {
+        $wishList = $req->query->get('wishList');
+        $wishList = $wishList !== null ? (int) $wishList : null; // Convert to int if provided
+
         // Validate "onlyBought" as boolean (default: false)
         $onlyBought = filter_var($req->query->get('onlyBought', false), 
             FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
@@ -62,7 +65,7 @@ final class ItemController extends AbstractController
             ["options" => ["min_range" => 1]]) ?: 1;
 
         // Fetch items from repository with filters
-        $items = $this->itemRepository->findAllItemsFiltered($onlyBought, $sortBy,
+        $items = $this->itemRepository->findAllItemsFiltered($wishList, $onlyBought, $sortBy,
              $sort, $max, $page);
 
         if (!$items) {
@@ -71,7 +74,7 @@ final class ItemController extends AbstractController
 
         $itemArray = array_map(fn($item) => [
             'id' => $item->getId(),
-            'wishList' => $item->getWishList(),
+            'wishList' => $item->getWishList()->getId(),
             'title' => $item->getTitle(),
             'description' => $item->getDescription(),
             'price' => $item->getPrice(),
@@ -115,4 +118,7 @@ final class ItemController extends AbstractController
             'path' => 'src/Controller/ItemController.php',
         ]);
     }
+
+
+
 }
