@@ -16,28 +16,46 @@ class WishListRepository extends ServiceEntityRepository
         parent::__construct($registry, WishList::class);
     }
 
-    //    /**
-    //     * @return WishList[] Returns an array of WishList objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('w.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findAllItems (): array {
+        return $this->findAll();
+    }
 
-    //    public function findOneBySomeField($value): ?WishList
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findAllWishListsFiltered(?int $userId, ?\DateTime $expirationDate, ?bool $isActive, string $sortBy, string $sort, int $max, int $page): array
+    {
+        $queryBuilder = $this->createQueryBuilder('w');
+
+        // Filter by user ID if provided
+        if ($userId !== null) {
+            $queryBuilder->andWhere('w.user = :userId')
+                        ->setParameter('userId', $userId);
+        }
+
+        // Filter by expirationDate if provided
+        if ($expirationDate !== null) {
+            $queryBuilder->andWhere('w.expirationDate >= :expirationDate')
+                        ->setParameter('expirationDate', $expirationDate);
+        }
+
+        // Filter by active status if provided
+        if ($isActive !== null) {
+            $queryBuilder->andWhere('w.isActive = :isActive')
+                        ->setParameter('isActive', $isActive);
+        }
+
+        // Ensure sorting by either 'createdAt' or 'expirationDate'
+        if (!in_array($sortBy, ['createdAt', 'expirationDate'])) {
+            $sortBy = 'createdAt'; // Default sorting by date created
+        }
+
+        // Ensure sort order is either 'asc' or 'desc'
+        if (!in_array(strtolower($sort), ['asc', 'desc'])) {
+            $sort = 'desc'; // Default descending
+        }
+
+        $queryBuilder->orderBy("w.$sortBy", $sort)
+                    ->setMaxResults($max)
+                    ->setFirstResult(($page - 1) * $max);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

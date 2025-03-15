@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/items')]
@@ -18,17 +17,15 @@ final class ItemController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private ItemRepository $itemRepository;
-    private UserPasswordHasherInterface $passwordHasher;
     private ValidatorInterface $validator;
+    
     public function __construct(
         EntityManagerInterface $entityManager,
         ItemRepository $itemRepository,
-        UserPasswordHasherInterface $passwordHasher,
         ValidatorInterface $validator
     ) {
         $this->entityManager = $entityManager;
         $this->itemRepository = $itemRepository;
-        $this->passwordHasher = $passwordHasher;
         $this->validator = $validator;
     }
 
