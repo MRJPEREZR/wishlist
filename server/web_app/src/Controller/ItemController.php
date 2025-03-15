@@ -33,30 +33,61 @@ final class ItemController extends AbstractController
     }
 
     #[Route('', methods: ['GET'])]
-    public function getAllItems(): JsonResponse
+    public function getAllItems(Request $req): JsonResponse
     {
-        $items = $this->itemRepository->findAllItems();
+        // Validate "onlyBought" as boolean (default: false)
+        $onlyBought = filter_var($req->query->get('onlyBought', false), 
+            FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
 
-        if (!$items) {
-            return new JsonResponse(['error' => 'Item not found'], Response::HTTP_NOT_FOUND);
+        // Validate "sortBy" to allow only 'createdAt' or 'price'
+        $allowedSortBy = ['createdAt', 'price'];
+        $sortBy = $req->query->get('sortBy', 'createdAt');
+        if (!in_array($sortBy, $allowedSortBy, true)) {
+            $sortBy = 'price';
         }
 
-        $itemArray = array_map(fn($item) => 
-        [
+        // Validate "sort" to allow only 'asc' or 'desc'
+        $allowedSort = ['asc', 'desc'];
+        $sort = strtolower($req->query->get('sort', 'asc'));
+        if (!in_array($sort, $allowedSort, true)) {
+            $sort = 'desc';
+        }
+
+        // Validate "max" as a positive integer (default: 10)
+        $max = filter_var($req->query->get('max', 10), FILTER_VALIDATE_INT,
+            ["options" => ["min_range" => 1]]) ?: 10;
+
+        // Validate "page" as a positive integer (default: 1)
+        $page = filter_var($req->query->get('page', 1), FILTER_VALIDATE_INT,
+            ["options" => ["min_range" => 1]]) ?: 1;
+
+        // Fetch items from repository with filters
+        $items = $this->itemRepository->findAllItemsFiltered($onlyBought, $sortBy,
+             $sort, $max, $page);
+
+        if (!$items) {
+            return new JsonResponse(['error' => 'No items found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $itemArray = array_map(fn($item) => [
             'id' => $item->getId(),
             'wishList' => $item->getWishList(),
             'title' => $item->getTitle(),
-            'description' =>$item->getDescription(),
-            'price' =>$item->getPrice(),
-            'purchaseUrl' =>$item->getPurchaseUrl(),
-            'createdAt' => $item->getCreatedAt()    
-        ]
-        , $items);
-        
+            'description' => $item->getDescription(),
+            'price' => $item->getPrice(),
+            'purchaseUrl' => $item->getPurchaseUrl(),
+            'createdAt' => $item->getCreatedAt()
+        ], $items);
+
         return $this->json([
             'items' => $itemArray,
-            'path' => 'src/Controller/ItemController.php',
+            'page' => $page,
+            'max' => $max,
+            'sortBy' => $sortBy,
+            'sort' => $sort,
+            'onlyBought' => $onlyBought
         ]);
+
     }
 
     #[Route('/{itemId}', methods: ['GET'])]
