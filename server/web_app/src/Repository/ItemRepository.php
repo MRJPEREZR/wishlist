@@ -20,7 +20,7 @@ class ItemRepository extends ServiceEntityRepository
         return $this->findAll();
     }
 
-    // Custom query method to find a user by id
+    // Custom query method to find an item by id
     public function findOneById(int $id): ?Item
     {
         return $this->findOneBy(['id' => $id]);
