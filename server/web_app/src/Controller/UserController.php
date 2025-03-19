@@ -106,7 +106,12 @@ final class UserController extends AbstractController implements UserControllerI
             $userRole = UserRole::from($roleParam);
         }
 
-        $isBlocked = filter_var($req->query->get('isBlocked', null), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $isBlockedRaw = $req->query->get('isBlocked', null);
+        if ($isBlockedRaw === null) {
+            $isBlocked = null;
+        } else {
+            $isBlocked = filter_var($isBlockedRaw, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        }
         
         // Validate "sortBy" to allow only 'createdAt' or 'username'
         $allowedSortBy = ['createdAt', 'username'];
@@ -137,6 +142,8 @@ final class UserController extends AbstractController implements UserControllerI
 
         $userArray = array_map(fn($user) => [
             'id' => $user->getId(),
+            'name' => $user->getName(),
+            'surname' => $user->getSurname(),
             'username' => $user->getUserName(),
             'mail' => $user->getEmail(),
             'role' => $user->getRoles(),
@@ -264,15 +271,6 @@ final class UserController extends AbstractController implements UserControllerI
 
         return $this->json([
             'message' => 'User deleted successfully',
-            'path' => 'src/Controller/UserController.php',
-        ]);
-    }
-
-    #[Route('/authenticate', methods: ['POST'])]
-    public function authenticateUser(string $username, string $password): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
             'path' => 'src/Controller/UserController.php',
         ]);
     }

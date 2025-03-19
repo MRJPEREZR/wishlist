@@ -15,12 +15,12 @@ class WishListMember
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: WishList::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     #[Assert\NotNull(message: "WishList must be provided.")]
     private ?WishList $wishList = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     #[Assert\NotNull(message: "User must be provided.")]
     private ?User $user = null;
 
