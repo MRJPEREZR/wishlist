@@ -1,0 +1,25 @@
+
+{% extends 'base.html.twig' %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+  <section class="container">
+    <a class="card" href="{{ path('manageInsights') }}">
+      <article>
+        <img src="{{ asset('img/gifts.png') }}" alt="">
+        <h4>Insights</h4>
+        <p>View insights about system's lists and system's items.</p>
+      </article>
+    </a>
+    <a class="card" href="{{ path('manageUsers') }}">
+      <article>
+        <img src="{{ asset('img/users.png') }}" alt="">
+        <h4>Users</h4>
+          <p>Administrate users.</p>
+      </article>
+    </a>
+  </section>
+{% endblock %}

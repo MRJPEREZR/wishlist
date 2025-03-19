@@ -1,0 +1,48 @@
+@import url('global.css');
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: var(--margin-space-normal);
+}
+
+.card {
+  display: block;
+  width: 16rem;
+  max-height: 26rem;
+  color: black;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--color-complementary);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card article {
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 15px 0px;
+}
+
+.card h4 {
+  font-size: var(--font-size-big);
+  color: var(--color-hover);
+  margin: 10px 0;
+}
+
+.card p {
+  font-size: var(--font-size-normal);
+  line-height: 1.5;
+  padding: var(--padding-space-normal);
+}

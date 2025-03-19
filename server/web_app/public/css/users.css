@@ -1,0 +1,33 @@
+@import url('global.css');
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-complementary);
+}
+
+table th, table td {
+  border: var(--border-thin) solid var(--color-hover);
+  padding: var(--padding-space-small);
+  text-align: left;
+}
+
+table th {
+  background-color: var(--color-hover);
+  color: var(--color-complementary);
+}
+
+button {
+  padding: 6px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: var(--border-thick);
+  color: var(--color-complementary);
+  cursor: pointer;
+  background-color: var(--color-basic);
+}
+
+button:hover {
+  background-color: var(--color-hover);
+  color: var(--color-complementary);
+}
