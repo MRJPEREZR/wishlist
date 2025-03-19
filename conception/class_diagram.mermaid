@@ -1,0 +1,228 @@
+<div class="mermaid">
+    classDiagram
+        %%  =====  Website Class  ===== 
+        class Website {
+            -users: List&lt;IUser&gt;
+            -wishLists: List&lt;IWishList&gt;
+            -items: List&lt;IItem&gt;
+            -purchases: List&lt;IPurchase&gt;
+        }
+        %% ===== INTERFACES (Contract Between Teams) =====
+    class IUser {
+        +createUser(req:Request)
+        +getAllUsers()
+        +getUserById(user_id:int)
+        +updateUser(user_id:int, req:Request)
+        +deleteUser(user_id:int)
+        +authenticateUser(username:string, password:string)
+        +changePassword(user_id:int, old_password:string, new_password:string)
+    }
+
+    class IWishList {
+        +createWishList(req:Request)
+        +getAllWishList()
+        +getWishListById(wishList_id:int)
+        +updateWishList(wishList_id:int, req:Request)
+        +deleteWishList(wishList_id:int)
+        +toggleIsActive(wishList_id:int)
+        +getUrl(wishList_id:int, mode:AccessMode)
+        +add_member(wishList_id: int, user_id: int, can_edit: bool)
+        +remove_member(wishList_id: int, user_id: int)
+        +update_member_permission(wishList_id: int, user_id: int, can_edit: bool)
+        +addItemToList(wishList_id:int, req:Request)
+        +removeItemFromList(wishList_id:int, req:Request)
+    }
+
+    class IItem {
+        +createItem(req:Request)
+        +getItemById(item_id: int)
+        +getAllItems(wishlist_id: int)
+        +update_item(item_id: int, req:Request)
+        +toggleIsBought(item_id: int)
+        +uploadProof(purchase_url: string)
+    }
+
+    class IPurchase {
+        +createPurchase(req: Request)
+        +getPurchaseById(purchase_id: int)
+        +getAllPurchases()
+        +updatePurchase(purchase_id:int, req: Request)
+        +deletePurchase(purchase_id: int)
+    }
+
+        %% ===== Enums used in MODEL LAYER =====
+        class UserRole {
+            +ADMIN
+            +USER
+        }
+
+        class AccessMode {
+            +VIEWER
+            +EDITOR
+        }
+
+        %% ===== MODEL LAYER =====
+        class User {
+            -username: string
+            -name: string
+            -surname: string
+            -email: string
+            -passwordHash: string
+            -isBlocked: bool
+            -role:UserRole
+            -created_at: datetime
+        }
+
+        class WishList {
+            -user: User
+            -name: string 
+            -description: string 
+            -expiration_date: datetime
+            -isActive: boolean 
+            -urlView_mode: string
+            -urlEdit_mode: string
+            -createdAt: datetime 
+        }
+
+        class WishListMember {
+            -wishList: WishList 
+            -user: User
+            -canEdit: boolean
+            -isAccepted: boolean
+        }
+
+        class Item {
+            -title: string
+            -wishList: WishList
+            -description: string
+            -price: float
+            -purchaseUrl: string
+            -isBought: boolean
+            -createdAt: datetime
+        }
+
+        class Purchase {
+            -user: User 
+            -itemd: int 
+            -urlProof: string 
+            -message: string
+            -createdAt: datetime
+        }
+
+        %% ===== CONTROLLER LAYER =====
+        class UserController {
+            +createUser(req:Request)
+            +getAllUsers()
+            +getUserById(user_id:int)
+            +updateUser(user_id:int, req:Request)
+            +deleteUser(user_id:int)
+            +authenticateUser(username:string, password:string)
+            +changePassword(user_id:int, old_password:string, new_password:string)
+        }
+
+        class WishListController {
+            +createWishList(req:Request)
+            +getAllWishList()
+            +getWishListById(wishList_id:int)
+            +updateWishList(wishList_id:int, req:Request)
+            +deleteWishList(wishList_id:int)
+            +toggleIsActive(wishList_id:int)
+            +getUrl(wishList_id:int, mode:AccessMode)
+            +add_member(wishList_id: int, user_id: int, can_edit: bool)
+            +remove_member(wishList_id: int, user_id: int)
+            +update_member_permission(wishList_id: int, user_id: int, can_edit: bool)
+            +addItemToList(wishList_id:int, req:Request)
+            +removeItemFromList(wishList_id:int, req:Request)
+        }
+
+        class ItemController {
+            +createItem(req:Request)
+            +getItemById(item_id: int)
+            +getAllItems(wishlist_id: int)
+            +update_item(item_id: int, req:Request)
+            +toggleIsBought(item_id: int)
+            +uploadProof(purchase_url: string)
+        }
+
+        class PurchaseController {
+            +createPurchase(req: Request)
+            +getPurchaseById(purchase_id: int)
+            +getAllPurchases()
+            +updatePurchase(purchase_id:int, req: Request)
+            +deletePurchase(purchase_id: int)
+
+        }
+
+        %% ===== VIEW LAYER =====
+        %% class UserView {
+        %%     +display_user_details(user: User)
+        %%     +display_user_list(users: List[User])
+        %%     +show_login_form()
+        %%     +show_registration_form()
+        %%     +show_edit_user_form(user: User)
+        %%     +show_delete_user_confirmation(user: User)
+        %%     +show_block_unblock_option(user: User)
+        %% }
+
+        %% class WishListView {
+        %%         +display_wishlist_details(wishList: WishList)
+        %%         +display_wishlist_list(wishLists: List[WishList])
+        %%         +show_create_wishlist_form()
+        %%         +show_edit_wishlist_form(wishList: WishList)
+        %%         +show_delete_wishlist_confirmation(wishList: WishList)
+        %%         +show_add_member_form(wishList: WishList)
+        %%         +display_members_list(members: List[WishListMember])
+        %% }
+
+        %% class ItemView {
+        %%     +display_item_details(item: Item)
+        %%     +display_item_list(items: List[Item])
+        %%     +show_add_item_form(wishlist: WishList)
+        %%     +show_edit_item_form(item: Item)
+        %%     +show_delete_item_confirmation(item: Item)
+        %%     +show_mark_as_bought_option(item: Item, user: User)
+        %% }
+
+        %% class PurchaseView {
+        %%     +display_purchase_details(purchase: Purchase)
+        %%     +display_purchase_list(purchases: List[Purchase])
+        %%     +show_purchase_form(wishList: WishList, item: Item)
+        %%     +show_delete_purchase_confirmation(purchase: Purchase)
+        %% }
+
+        %% ===== RELATIONSHIPS =====
+        Website --> IUser : uses
+        Website --> IWishList : uses
+        Website --> IItem : uses
+        Website --> IPurchase : uses
+
+        User "1" --> "*" WishList : creates
+        User --> UserRole: uses
+        %% It contains multiple Item objects, but an Item can exist independently of a WishList
+        WishList "1" *-- "*" Item : belongs
+        %% Either a user or a wishLIst are removed, then the record the wishListMember Object can exist
+        WishList "1" *-- "*" WishListMember : has
+        User "*" *-- "*" WishListMember : can_access
+        %% It does not make sense for a Purchase to exist without an associated Item.
+        Item "1" *-- "1" Purchase : bought_as
+        User "1" --> "*" Purchase : buys
+
+        %% Controllers implement their respective interfaces
+        UserController ..|> IUser : implements
+        WishListController ..|> IWishList : implements
+        WishListController --> AccessMode: uses
+        ItemController ..|> IItem: implements
+        PurchaseController ..|> IPurchase: implements
+
+        %% Controllers handle their respective models
+        UserController --> User: uses
+        WishListController --> WishList: uses
+        ItemController --> Item: uses
+        PurchaseController --> Purchase: uses
+
+        %% %% Views are associated with their controllers
+        %% UserView --> UserController: uses
+        %% WishListView --> WishListController: uses
+        %% ItemView --> ItemController: uses
+        %% PurchaseView --> PurchaseController: uses
+</div>
