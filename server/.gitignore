@@ -9,7 +9,7 @@ Thumbs.db
 /nbproject/
 
 /vendor/
-composer.lock
+# composer.lock
 
 # Caché y logs
 /storage/logs/
