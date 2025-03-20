@@ -1,0 +1,52 @@
+{# templates/shared_wishlist.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{ ownerName }}'s Wishlist
+{% endblock %}
+
+{% block styles %}
+  {# 引入你为此页面专门编写的CSS，确保目录与文件名对应 #}
+  <link rel="stylesheet" href="{{ asset('css/wishlist.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h2>{{ ownerName }}'s WishList</h2>
+
+  {# 排序控件（示例） #}
+  <aside class="sorting-controls">
+    <h4>Sort by:</h4>
+    <ul>
+      <li><a href="?sort=priceAsc">Price (Asc)</a></li>
+      <li><a href="?sort=priceDesc">Price (Desc)</a></li>
+    </ul>
+  </aside>
+
+  <section class="wishlist-items">
+    {% for item in wishListItems %}
+      <div class="wishlist-item {% if item.purchased %}purchased{% endif %}">
+        <div class="item-info">
+          <h3>{{ item.title }}</h3>
+          <p class="price">\${{ item.price }}</p>
+        </div>
+
+        {% if item.purchased %}
+          <span class="status purchased">Purchased</span>
+          <div class="hover-info">
+            <p>Purchaser: {{ item.purchaserName }}</p>
+            <p>Message: {{ item.congratulatoryMessage }}</p>
+            <p>Date: {{ item.purchaseDate|date('d/m/Y') }}</p>
+          </div>
+        {% else %}
+          {# 点击后跳转到购买页面，后端路由名称自行调整 #}
+          <button class="btn purchase-btn"
+                  onclick="window.location='{{ path('purchase_item', {'itemId': item.id}) }}'">
+            Buy
+          </button>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
