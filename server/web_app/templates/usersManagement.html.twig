@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h3>Usuarios</h3>
+    <h3>User control panel</h3>
 
     <article class="container">
         <table id="usersTable">
@@ -21,5 +21,16 @@
             </tbody>     
         </table>
     </article>
+
+    <!-- Popup Modal -->
+    <div id="confirmationPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h4>Are you sure?</h4>
+            <p id="popupMessage"></p>
+            <button id="confirmBtn" class="btn btn-danger">Yes</button>
+            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+
     <script src="{{ asset('js/users.js') }}"></script>
 {% endblock %}

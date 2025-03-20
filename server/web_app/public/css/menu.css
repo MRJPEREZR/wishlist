@@ -1,0 +1,42 @@
+@import url('global.css');
+
+nav {
+  background-color: var(--color-hover);
+  width: 100%;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+nav ul li {
+  margin: var(--margin-space-xsmall) 0;
+}
+
+nav ul li a {
+  color: var(--color-complementary);
+  text-decoration: none;
+  font-size: var(--font-size-normal);
+  display: block;
+  padding: var(--padding-space-normal);
+  border-radius: var(--padding-space-small) var(--border-thick);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+  background-color: var(--color-secondary);
+}
+
+.login {
+  margin-left: auto;
+}
+
+h3 {
+  margin: var(--margin-space-small) auto;
+  text-align: center;
+  font-size: var(--font-size-extrabig);
+}

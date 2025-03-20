@@ -154,7 +154,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     //Methods neeeded to be implemented here because of the extension of UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
-        return ['ROLE_' . strtoupper($this->role)]; // Assuming UserRole is an enum with string values
+        return ['ROLE_' . strtoupper($this->role->value)]; // Assuming UserRole is an enum with string values
     }
 
     public function getUserIdentifier(): string
