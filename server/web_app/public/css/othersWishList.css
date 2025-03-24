@@ -1,0 +1,142 @@
+/* wishlist.css */
+
+/* 定义全局颜色变量 */
+:root {
+    --color-basic: #00B8DE;
+    --color-hover: #14223C;
+    --color-secondary: #99CC99;
+    --color-light: #EDF3F4;
+    --color-complementary: #FFFFFF;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--color-complementary);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 页面整体容器 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 标题 */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 排序控件 */
+.sorting-controls {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.sorting-controls ul {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+}
+.sorting-controls ul li {
+    display: inline;
+    margin: 0 10px;
+}
+.sorting-controls ul li a {
+    text-decoration: none;
+    color: var(--color-basic);
+    font-weight: bold;
+}
+.sorting-controls ul li a:hover {
+    color: var(--color-hover);
+}
+
+/* 愿望清单列表 */
+.wishlist-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* 单个愿望清单项 */
+.wishlist-item {
+    background: var(--color-light);
+    border: 1px solid #ccc;
+    padding: 15px;
+    position: relative;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.2s;
+}
+.wishlist-item:hover {
+    transform: scale(1.02);
+}
+.wishlist-item h3 {
+    margin-top: 0;
+}
+.wishlist-item .price {
+    font-size: 1.2em;
+    color: var(--color-basic);
+    margin-bottom: 10px;
+}
+
+/* 按钮样式 */
+.wishlist-item .btn {
+    background: var(--color-basic);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.wishlist-item .btn:hover {
+    background: var(--color-hover);
+}
+
+/* 已购买项样式 */
+.wishlist-item.purchased {
+    opacity: 0.6;
+    pointer-events: none;
+}
+.wishlist-item .status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--color-secondary);
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* 悬停提示区域 */
+.hover-info {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 0.9em;
+}
+.wishlist-item.purchased:hover .hover-info {
+    display: block;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .wishlist-item {
+        width: calc(50% - 20px);
+    }
+}
+@media (max-width: 480px) {
+    .wishlist-item {
+        width: 100%;
+    }
+}

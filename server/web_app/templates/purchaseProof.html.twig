@@ -1,4 +1,4 @@
-{# templates/purchase.html.twig #}
+{# templates/purchaseProof.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}
@@ -6,8 +6,13 @@
 {% endblock %}
 
 {% block styles %}
-  <link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/purchaseProof.css') }}">
 {% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/purchaseProof.js') }}"></script>
+{% endblock %}
+
 
 {% block body %}
 <div class="container purchase-page">

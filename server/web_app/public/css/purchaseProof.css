@@ -1,0 +1,115 @@
+/* purchase.css */
+
+/* 全局颜色变量（与其他页面保持一致） */
+:root {
+    --color-basic: #00B8DE;
+    --color-hover: #14223C;
+    --color-secondary: #99CC99;
+    --color-light: #EDF3F4;
+    --color-complementary: #FFFFFF;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--color-complementary);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 页面整体容器 */
+.container.purchase-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 页面标题与说明 */
+.purchase-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.purchase-page p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 表单基本样式 */
+.purchase-page form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-group input[type="file"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+}
+
+/* 按钮样式 */
+.btn {
+    background: var(--color-basic);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: var(--color-hover);
+}
+
+/* 成功弹窗样式 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none; /* 默认隐藏 */
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--color-complementary);
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .container.purchase-page {
+        padding: 10px;
+    }
+}

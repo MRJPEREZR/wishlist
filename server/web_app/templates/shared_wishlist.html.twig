@@ -6,9 +6,13 @@
 {% endblock %}
 
 {% block styles %}
-  {# 引入你为此页面专门编写的CSS，确保目录与文件名对应 #}
-  <link rel="stylesheet" href="{{ asset('css/wishlist.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/othersWishlist.css') }}">
 {% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/othersWishlist.js') }}"></script>
+{% endblock %}
+
 
 {% block body %}
 <div class="container">
