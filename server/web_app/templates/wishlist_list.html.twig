@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>My Wishlists</h2>
+
+<a href="/wishLists/new">Create New Wishlist</a>
+
+<ul>
+{% for wishlist in wishlists %}
+    <li>
+        <strong>{{ wishlist.name }}</strong><br>
+        {{ wishlist.description }}<br>
+        <a href="/wishLists/{{ wishlist.id }}/items">View Items</a> |
+        <a href="/wishLists/{{ wishlist.id }}/edit">Edit</a> |
+        <a href="/wishLists/{{ wishlist.id }}/delete">Delete</a> |
+        <a href="/wishLists/{{ wishlist.id }}/share">Share</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -116,6 +116,72 @@ final class ItemController extends AbstractController
         ]);
     }
 
+//////////////////////////////////////////////////////////////////////////////////
+#[Route('/items', methods: ['POST'])]
+public function createItem(Request $request): JsonResponse
+{
+    $data = json_decode($request->getContent(), true);
+    $item = new \App\Entity\Item();
+    $item->setTitle($data['title']);
+    $item->setDescription($data['description']);
+    $item->setUrl($data['url']);
+
+    $wishList = $this->wishListRepository->find($data['wishlist_id']);
+    $item->setWishList($wishList);
+
+    $this->entityManager->persist($item);
+    $this->entityManager->flush();
+
+    return $this->json(['status' => 'Item created']);
+}
+
+#[Route('/items/by-wishlist/{wishlistId}', methods: ['GET'])]
+public function getItemsByWishList(int $wishlistId): JsonResponse
+{
+    $items = $this->itemRepository->findBy(['wishList' => $wishlistId]);
+
+    $response = array_map(fn($item) => [
+        'id' => $item->getId(),
+        'title' => $item->getTitle(),
+        'description' => $item->getDescription(),
+        'url' => $item->getUrl(),
+    ], $items);
+
+    return $this->json($response);
+}
+
+#[Route('/items/{id}', methods: ['PUT'])]
+public function updateItem(int $id, Request $request): JsonResponse
+{
+    $item = $this->itemRepository->find($id);
+    if (!$item) {
+        return $this->json(['error' => 'Item not found'], 404);
+    }
+
+    $data = json_decode($request->getContent(), true);
+    $item->setTitle($data['title'] ?? $item->getTitle());
+    $item->setDescription($data['description'] ?? $item->getDescription());
+    $item->setUrl($data['url'] ?? $item->getUrl());
+
+    $this->entityManager->flush();
+
+    return $this->json(['status' => 'Item updated']);
+}
+
+#[Route('/items/{id}', methods: ['DELETE'])]
+public function deleteItem(int $id): JsonResponse
+{
+    $item = $this->itemRepository->find($id);
+    if (!$item) {
+        return $this->json(['error' => 'Item not found'], 404);
+    }
+
+    $this->entityManager->remove($item);
+    $this->entityManager->flush();
+
+    return $this->json(['status' => 'Item deleted']);
+}
+
 
 
 }

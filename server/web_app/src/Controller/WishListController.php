@@ -136,6 +136,71 @@ final class WishListController extends AbstractController
         ]);
     }
 
+//////////////////////////////////////////////////////////////////////////////////
+#[Route('/new', methods: ['POST'])]
+public function createWishList(Request $request): JsonResponse
+{
+    $data = json_decode($request->getContent(), true);
+    $wishList = new \App\Entity\WishList();
+    $wishList->setName($data['name']);
+    $wishList->setDescription($data['description'] ?? '');
+    $wishList->setExpirationDate(new \DateTime($data['expirationDate']));
+    $wishList->setIsActive(true);
+    $wishList->setCreatedAt(new \DateTime());
 
+    $user = $this->getUser(); // 需要用户登录
+    $wishList->setUser($user);
+
+    $this->entityManager->persist($wishList);
+    $this->entityManager->flush();
+
+    return $this->json(['status' => 'Wishlist created!']);
+}
+
+#[Route('/{id}', methods: ['DELETE'])]
+public function deleteWishList(int $id): JsonResponse
+{
+    $wishList = $this->wishListRepository->find($id);
+    if (!$wishList) {
+        return $this->json(['error' => 'Not found'], 404);
+    }
+
+    $this->entityManager->remove($wishList);
+    $this->entityManager->flush();
+
+    return $this->json(['status' => 'Deleted']);
+}
+
+#[Route('/{id}', methods: ['PUT'])]
+public function updateWishList(int $id, Request $request): JsonResponse
+{
+    $data = json_decode($request->getContent(), true);
+    $wishList = $this->wishListRepository->find($id);
+
+    if (!$wishList) {
+        return $this->json(['error' => 'Not found'], 404);
+    }
+
+    $wishList->setName($data['name'] ?? $wishList->getName());
+    $wishList->setDescription($data['description'] ?? $wishList->getDescription());
+    $wishList->setExpirationDate(new \DateTime($data['expirationDate']));
+
+    $this->entityManager->flush();
+
+    return $this->json(['status' => 'Updated']);
+}
+
+#[Route('/{id}/share', methods: ['GET'])]
+public function getShareLink(int $id): JsonResponse
+{
+    $url = $this->generateUrl('public_wishlist_view', ['id' => $id], 0); // 绝对路径
+    return $this->json(['url' => $url]);
+}
 
 }
+
+
+
+
+
+

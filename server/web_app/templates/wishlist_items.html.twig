@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Items in "{{ wishlist.name }}"</h2>
+
+<form method="post" action="/items">
+    <input type="hidden" name="wishlist_id" value="{{ wishlist.id }}">
+    <label>Title: <input type="text" name="title" required></label><br>
+    <label>Description: <input type="text" name="description"></label><br>
+    <label>Buy URL: <input type="url" name="url"></label><br>
+    <button type="submit">Add Item</button>
+</form>
+
+<ul>
+{% for item in items %}
+    <li>
+        <strong>{{ item.title }}</strong><br>
+        {{ item.description }}<br>
+        <a href="{{ item.url }}" target="_blank">Buy</a><br>
+        <a href="/items/{{ item.id }}/edit">Edit</a> |
+        <a href="/items/{{ item.id }}/delete">Delete</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
