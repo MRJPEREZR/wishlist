@@ -135,14 +135,13 @@ class ItemRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('i')
             ->andWhere('i.wishList = :wishList')
             ->setParameter('wishList', $wishList);
-
-
+    
         if (!in_array(strtolower($sortOrder), ['asc', 'desc'])) {
             $sortOrder = 'asc';
         }
-
-        $queryBuilder->orderBy('i.createdAt', $sortOrder);
-
+    
+        $queryBuilder->orderBy('i.price', $sortOrder);
+    
         return $queryBuilder->getQuery()->getResult();
-    }
+    }    
 }

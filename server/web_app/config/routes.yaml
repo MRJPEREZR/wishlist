@@ -7,3 +7,12 @@ controllers:
 app_login_check:
     path: /login_check
 
+wish_list_show:
+  path: /wishList/{wishListId}
+  controller: App\Controller\WishListController::showWishList
+  methods: [GET]
+
+item_purchase:
+  path: /item/purchase
+  controller: App\Controller\WishListController::purchaseItem
+  methods: [POST]
